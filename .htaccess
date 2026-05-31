@@ -1,0 +1,19 @@
+Options -Indexes
+
+# ── Pretty book category URLs ──────────────────────────────────────────────
+# /books/spirit-of-prophecy → category.php?slug=spirit-of-prophecy
+RewriteEngine On
+RewriteBase /advent/
+
+# Allow real files and directories to pass through first
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# /books/{slug}  →  category.php?slug={slug}
+RewriteRule ^books/([a-z0-9-]+)/?$ category.php?slug=$1 [L,QSA]
+
+# Prevent direct execution of PHP inside uploads
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|cgi|sh)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
